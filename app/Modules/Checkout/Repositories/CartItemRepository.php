@@ -112,13 +112,13 @@ class CartItemRepository extends BaseRepository implements CartItemRepositoryCon
         $userId = $cartItemAddGuestItemsToUserCartDTO->user_id;
 
         $guest_cart_items = $this->model->where('cart_id', $cartId)->with('product')->get();
-        $user_cart = $this->cartRepo->getCartIdByUserId($userId);
-        $product_ids = empty($user_cart)? [] : $this->model->where('cart_id', $user_cart->id)->get()->pluck('product_id')->toArray();
+        $user_cart_id = $this->cartRepo->getCartIdByUserId($userId);
+        $product_ids = empty($user_cart_id)? [] : $this->model->where('cart_id', $user_cart_id)->get()->pluck('product_id')->toArray();
 
         foreach ($guest_cart_items as $guest_cart_item) {
             // merge case if guest and user cart items have same product
             if (in_array($guest_cart_item->product_id, $product_ids)) {
-                $item_to_update = $this->model->where('cart_id', $user_cart->id)->where('product_id', $guest_cart_item->product_id)->first();
+                $item_to_update = $this->model->where('cart_id', $user_cart_id)->where('product_id', $guest_cart_item->product_id)->first();
                 $quantity = $item_to_update->quantity + $guest_cart_item->quantity;
                 $quantity = ($guest_cart_item->product->quantity > $quantity) ? $quantity : $guest_cart_item->product->quantity;
                 $item_to_update->update(['quantity' => $quantity]);
@@ -128,7 +128,7 @@ class CartItemRepository extends BaseRepository implements CartItemRepositoryCon
                 $quantity = $guest_cart_item->product->quantity > $guest_cart_item->quantity ? $guest_cart_item->quantity : $guest_cart_item->product->quantity;
                 $this->model->where('cart_id', $guest_cart_item->cart_id)
                     ->where('product_id', $guest_cart_item->product_id)
-                    ->update(['cart_id' => $user_cart->id, 'quantity' => $quantity]);
+                    ->update(['cart_id' => $user_cart_id, 'quantity' => $quantity]);
             }
         }
     }
