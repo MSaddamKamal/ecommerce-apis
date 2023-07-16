@@ -1,4 +1,4 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://freepngimg.com/thumb/cart/10-2-cart-png-pic.png" width="400" alt="Laravel Logo"></a></p>
+<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://freepngimg.com/thumb/cart/10-2-cart-png-pic.png" width="250" alt="Cart Logo"></a></p>
 
 
 # Ecommerce API
