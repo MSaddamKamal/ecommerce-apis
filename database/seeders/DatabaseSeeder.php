@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
         $faker = Faker::create();
 
         // Create fake Products In DB
-        for($i=0;$i<10;$i++){
+        for($i=0;$i<30;$i++){
             $data = [
                 "name" => $faker->unique()->name(),
                 "sku" => Str::upper(Str::random(4)),
