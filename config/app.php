@@ -169,6 +169,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         ArtemSchander\L5Modular\ModuleServiceProvider::class,
+        App\Modules\Auth\Providers\AuthRepositoryProvider::class,
     ])->toArray(),
 
     /*
