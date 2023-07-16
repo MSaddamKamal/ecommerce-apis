@@ -172,6 +172,7 @@ return [
         App\Modules\Auth\Providers\AuthRepositoryProvider::class,
         App\Modules\Product\Providers\ProductRepositoryProvider::class,
         App\Modules\Checkout\Providers\CheckoutRepositoryProvider::class,
+        App\Modules\Analytics\Providers\AnalyticsRepositoryProvider::class,
     ])->toArray(),
 
     /*
