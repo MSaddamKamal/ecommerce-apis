@@ -170,6 +170,8 @@ return [
         App\Providers\RouteServiceProvider::class,
         ArtemSchander\L5Modular\ModuleServiceProvider::class,
         App\Modules\Auth\Providers\AuthRepositoryProvider::class,
+        App\Modules\Product\Providers\ProductRepositoryProvider::class,
+        App\Modules\Checkout\Providers\CheckoutRepositoryProvider::class,
     ])->toArray(),
 
     /*
