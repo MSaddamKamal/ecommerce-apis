@@ -3,6 +3,7 @@
 namespace App\Modules\Checkout\Repositories;
 
 use App\Modules\Checkout\Contracts\CartRepositoryContract;
+use App\Modules\Checkout\DTO\CartDTO;
 use App\Modules\Common\Repositories\BaseRepository;
 use App\Modules\Checkout\Contracts\CartItemRepositoryContract;
 use App\Modules\Checkout\DTO\CartItemDTO;
@@ -113,6 +114,16 @@ class CartItemRepository extends BaseRepository implements CartItemRepositoryCon
 
         $guest_cart_items = $this->model->where('cart_id', $cartId)->with('product')->get();
         $user_cart_id = $this->cartRepo->getCartIdByUserId($userId);
+        if(!$user_cart_id){
+            // means auth user has not created any cart
+            // yet so just update the user_id in cart table for current auth user
+            $data = new CartDTO([
+                'user_id'=>$userId,
+                'id' => $cartId
+            ]);
+            $this->cartRepo->update($data);
+            return;
+        }
         $product_ids = empty($user_cart_id)? [] : $this->model->where('cart_id', $user_cart_id)->get()->pluck('product_id')->toArray();
 
         foreach ($guest_cart_items as $guest_cart_item) {

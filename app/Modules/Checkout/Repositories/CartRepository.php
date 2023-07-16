@@ -113,7 +113,7 @@ class CartRepository extends BaseRepository implements CartRepositoryContract
      * @param int $id
      * @return CartRepository|null
      */
-    public function byId($id): ?self
+    protected function byId($id): ?self
     {
         $this->builder = $this->builder->where('id', $id);
         return $this;
