@@ -46,14 +46,18 @@ class ProductRepository extends BaseRepository implements ProductRepositoryContr
         if($result->get('data')) {
             $data = $result->get('data');
             foreach($data as $k => $d) {
+                // get quantity added to cart item
                 $qty = !empty($cartItems)? $cartItems->where('product_id', $d['id'])->value('quantity') : 0;
+                // deducting quantity of cartitem from product original qty
                 $qtyLeft = $d['quantity'] - ($qty ?? 0);
                 $data[$k]['quantityLeftPerUser'] = $qtyLeft < 0 ? 0 : $qtyLeft;
             }
             $result['data'] = $data;
         }else {
             foreach($result as $k => $d) {
+                // get quantity added to cart item
                 $qty = !empty($cartItems) ? $cartItems->where('product_id', $d['id'])->value('quantity') : 0;
+                // deducting quantity of cartitem from product original qty
                 $qtyLeft = $d->quantity - ($qty ?? 0);
                 $result[$k]->quantityLeftPerUser = $qtyLeft < 0 ? 0 : $qtyLeft;
             }
